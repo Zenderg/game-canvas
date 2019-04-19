@@ -1,20 +1,22 @@
 import global from "./globalVariables";
-import Being from "./Being";
+import Creature from "./Creature";
 
-export default class NPC extends Being {
+export default class NPC extends Creature {
     canMove = true;
 
-    constructor(x, y) {
+    constructor(x, y, name) {
         super();
         this.step = 0.3;
         this.speed = 340;
         this.x = x;
         this.y = y;
+        this.name.text = name;
     }
 
     create = () => {
         global.ctx.fillStyle = '#07ff11';
         global.ctx.fillRect(this.x, this.y, 20, 20);
+        this.setCenter(this.x, this.y);
     };
     move = () => {
         if (this.canMove) {

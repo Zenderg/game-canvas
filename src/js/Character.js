@@ -1,16 +1,18 @@
 import global from './globalVariables'
-import Being from "./Being";
+import Creature from "./Creature";
 
-export default class Character extends Being{
-    constructor(x, y) {
+export default class Character extends Creature{
+    constructor(x, y, name) {
         super();
         this.x = x;
         this.y = y;
+        this.name.text = name;
     }
 
     create = () => {
         global.ctx.fillStyle = '#000000';
-        global.ctx.fillRect(this.x, this.y, 20, 20);
+        global.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.setCenter(this.x, this.y);
     };
 }
 
