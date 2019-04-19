@@ -1,23 +1,51 @@
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const express = require('express');
+const http = require('http');
 const path = require('path');
+const socketIO = require('socket.io');
 
-app.set("view engine", "pug");
+const app = express();
+const server = http.Server(app);
+const io = socketIO(server);
 
-app.get('/', (req, res) => {
-  res.send('server');
+app.set('port', 3000);
+app.set('view engine', 'pug');
+app.use(express.static('dist'));
+app.use(express.json());
+
+// Routing
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname, 'dist'));
 });
 
-io.on('connection', function (socket){
-  console.log('connection');
+server.listen(3000, function() {
+  console.log('Starting server on port 3000');
+});
 
-  socket.on('CH01', function (from, msg) {
-    console.log('MSG', from, ' saying ', msg);
+const players = {};
+io.on('connection', function(socket) {
+  socket.on('new player', function() {
+    players[socket.id] = {
+      x: 300,
+      y: 300
+    };
   });
-
+  socket.on('movement', function(data) {
+    const player = players[socket.id] || {};
+    if (data.left) {
+      player.x -= 5;
+    }
+    if (data.up) {
+      player.y -= 5;
+    }
+    if (data.right) {
+      player.x += 5;
+    }
+    if (data.down) {
+      player.y += 5;
+    }
+  });
 });
 
-http.listen(3000, function () {
-  console.log('listening on *:3000');
-});
+setInterval(function() {
+  io.sockets.emit('state', players);
+}, 1000 / 60);
