@@ -6,7 +6,7 @@ export const markKey = (key, flag) => {
     if (global.keys[key] !== undefined) global.keys[key] = flag;
 };
 export const insideCircle = (center, radius, pers) => {
-  return (center.x - pers.x) ** 2 + (center.y - pers.y) ** 2 <= radius ** 2;
+  return (center.x - pers.position.x) ** 2 + (center.y - pers.position.y) ** 2 <= radius ** 2;
 };
 
 export const resetControls = () => {
