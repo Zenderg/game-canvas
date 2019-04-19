@@ -38,12 +38,12 @@ export default class Creature {
         this.center.y = y + this.width / 2;
     };
 
-    moveTo = (pers) => {
+    moveTo = (target) => {
         const lengthLine = Math.sqrt(
-            (pers.center.x - this.position.x) ** 2 + (pers.center.y - this.position.y) ** 2);
+            (target.x - this.position.x) ** 2 + (target.y - this.position.y) ** 2);
         if (lengthLine > this.limitCome) {
-            const vectorX = this.center.x - pers.center.x;
-            const vectorY = this.center.y - pers.center.y;
+            const vectorX = this.center.x - target.x;
+            const vectorY = this.center.y - target.y;
             const vectorXStep = -vectorX / (Math.abs(-vectorX / this.step) | 0);
             const vectorYStep = -vectorY / (Math.abs(-vectorY / this.step) | 0);
 

@@ -26,7 +26,7 @@ const renderMonster = () => {
     monster.create();
     monster.showName();
     monster.showAgroRange();
-    monster.agro(global.characters[0])
+    monster.agroAction(global.characters[0])
   });
 };
 
