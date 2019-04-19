@@ -39,16 +39,24 @@ export default class Creature {
     };
 
     moveTo = (target) => {
-        const lengthLine = Math.sqrt(
-            (target.x - this.position.x) ** 2 + (target.y - this.position.y) ** 2);
-        if (lengthLine > this.limitCome) {
-            const vectorX = this.center.x - target.x;
-            const vectorY = this.center.y - target.y;
-            const vectorXStep = -vectorX / (Math.abs(-vectorX / this.step) | 0);
-            const vectorYStep = -vectorY / (Math.abs(-vectorY / this.step) | 0);
+        const lengthLine = Math.sqrt((target.x - this.position.x) ** 2 + (target.y - this.position.y) ** 2);
 
-            if (vectorXStep && vectorXStep !== Infinity && vectorXStep !== -Infinity) this.position.x += vectorXStep;
-            if (vectorYStep && vectorYStep !== Infinity && vectorYStep !== -Infinity) this.position.y += vectorYStep;
+        if (lengthLine > this.limitCome) {
+            const vectorX = -(this.center.x - target.x);
+            const vectorY = -(this.center.y - target.y);
+
+            console.log(Math.sign(vectorY));
+
+            Math.sign(vectorX) === 1 ? this.right() : this.left();
+            Math.sign(vectorY) === 1 ? this.down() : this.up();
+
+            // const vectorXStep = -vectorX / (Math.abs(-vectorX / this.step) | 0);
+            // const vectorYStep = -vectorY / (Math.abs(-vectorY / this.step) | 0);
+            //
+            // console.log(Math.sign(vectorY));
+            //
+            // if (vectorXStep && vectorXStep !== Infinity && vectorXStep !== -Infinity) this.position.x += vectorXStep;
+            // if (vectorYStep && vectorYStep !== Infinity && vectorYStep !== -Infinity) this.position.y += vectorYStep;
         }
     };
 

@@ -20,7 +20,7 @@ export default class Monster extends Creature {
         this.startPosition.x = x;
         this.startPosition.y = y;
         this.name.text = name;
-        // this.step = 2;
+        this.step = 0.1;
         this.setCenter(x, y);
     }
 
