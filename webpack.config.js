@@ -4,13 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, argv) => {
-
-    // if (argv.mode === 'development') {
-    // }
-    //
-    // if (argv.mode === 'production') {
-    // }
-
     return {
         entry: [
             'webpack/hot/dev-server',
@@ -82,7 +75,7 @@ module.exports = (env, argv) => {
         plugins: [
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: 'src/pug/index.pug'
+                template: 'views/index.pug'
             }),
             new MiniCssExtractPlugin({
                 filename: 'style.css'
