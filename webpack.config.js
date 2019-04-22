@@ -23,11 +23,16 @@ module.exports = (env, argv) => {
                 {
                     test: /\.scss$/,
                     use: [
-                        argv.mode !== 'production'
-                            ? 'style-loader'
-                            : MiniCssExtractPlugin.loader,
+                        "style-loader",
                         "css-loader",
                         "sass-loader"
+                    ]
+                },
+                {
+                    test: /\.css$/,
+                    use:[
+                        "style-loader",
+                        "css-loader"
                     ]
                 },
                 {
@@ -82,10 +87,10 @@ module.exports = (env, argv) => {
             }),
             new webpack.HotModuleReplacementPlugin()
         ],
-        devServer: {
+       /* devServer: {
             hot: true,
             contentBase: './dist',
             port: 3000
-        },
+        },*/
     }
 };
