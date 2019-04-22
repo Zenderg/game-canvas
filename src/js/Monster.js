@@ -20,14 +20,16 @@ export default class Monster extends Creature {
         this.startPosition.x = x;
         this.startPosition.y = y;
         this.name.text = name;
-        this.step = 0.1;
-        this.setCenter(x, y);
+        this.step = 1;
+        this.speed = 1;
+        this.speedModifier = 1;
+        this.setCenter(this.position);
     }
 
     create = () => {
         global.ctx.fillStyle = '#ff000c';
         global.ctx.fillRect(this.position.x, this.position.y, 20, 20);
-        this.setCenter(this.position.x, this.position.y);
+        this.setCenter(this.position);
     };
 
     showAgroRange = () => {
@@ -51,14 +53,14 @@ export default class Monster extends Creature {
         this.checkAgroRange(pers);
 
         if (this.agro) {
-            this.moveTo(pers.center);
-            this.setCenter(this.position.x, this.position.y);
+            this.moveTo(pers.center, this.speedModifier);
+            this.setCenter(this.position);
 
             this.checkAgroTimer();
 
         } else if (!this.agro) {
-            this.moveTo(this.startPosition);
-            this.setCenter(this.position.x, this.position.y);
+            this.moveTo(this.startPosition, this.speedModifier);
+            this.setCenter(this.position);
         }
     };
 

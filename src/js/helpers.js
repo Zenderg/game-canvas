@@ -14,3 +14,7 @@ export const resetControls = () => {
       global.keys[key] = false;
   }
 };
+
+export const lineLength = (target, position) => {
+    return Math.sqrt((target.x - position.x) ** 2 + (target.y - position.y) ** 2)
+};

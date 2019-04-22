@@ -16,7 +16,7 @@ export default class NPC extends Creature {
     create = () => {
         global.ctx.fillStyle = '#07ff11';
         global.ctx.fillRect(this.position.x, this.position.y, 20, 20);
-        this.setCenter(this.position.x, this.position.y);
+        this.setCenter(this.position);
     };
     move = () => {
         if (this.canMove) {

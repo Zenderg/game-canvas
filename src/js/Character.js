@@ -12,7 +12,7 @@ export default class Character extends Creature{
     create = () => {
         global.ctx.fillStyle = '#000000';
         global.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        this.setCenter(this.position.x, this.position.y);
+        this.setCenter(this.position);
     };
 }
 

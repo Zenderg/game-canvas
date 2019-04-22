@@ -1,12 +1,13 @@
 import global from './globalVariables';
+import {lineLength} from "./helpers";
 
 export default class Creature {
     position = {
         x: 0,
         y: 0
     };
-    step = 0.5;
-    speed = 20;
+    step = 1;
+    speed = 10;
     height = 20;
     width = 20;
     limitCome = this.width + 20;
@@ -33,23 +34,25 @@ export default class Creature {
     right = () => {
         this.movementTimer('x', 1);
     };
-    setCenter = (x, y) => {
-        this.center.x = x + this.width / 2;
-        this.center.y = y + this.width / 2;
+    setCenter = (position) => {
+        this.center.x = position.x + this.width / 2;
+        this.center.y = position.y + this.width / 2;
     };
 
-    moveTo = (target) => {
-        const lengthLine = Math.sqrt((target.x - this.position.x) ** 2 + (target.y - this.position.y) ** 2);
+    moveTo = (target, speedModifier = 1) => {
+        const lengthLine = lineLength(target, this.center);
 
         if (lengthLine > this.limitCome) {
-            const vectorX = -(this.center.x - target.x);
-            const vectorY = -(this.center.y - target.y);
-
-            console.log(Math.sign(vectorY));
-
-            Math.sign(vectorX) === 1 ? this.right() : this.left();
-            Math.sign(vectorY) === 1 ? this.down() : this.up();
-
+            for (let i = 0; i< speedModifier; i++){
+                console.log("position: " + this.center.x, "target: " + target.x);
+                // if (this.center.x === target.x) console.log( -(this.center.x - target.x));
+                const vectorX = -(this.center.x - target.x);
+                const vectorY = -(this.center.y - target.y);
+                console.log("vectorX: " + vectorX)
+                if (vectorX > this.step || vectorX < -this.step) Math.sign(vectorX) === 1 ? this.right() : this.left();
+                if (vectorY > this.step || vectorY < -this.step) Math.sign(vectorY) === 1 ? this.down() : this.up();
+            }
+            //
             // const vectorXStep = -vectorX / (Math.abs(-vectorX / this.step) | 0);
             // const vectorYStep = -vectorY / (Math.abs(-vectorY / this.step) | 0);
             //
@@ -63,6 +66,7 @@ export default class Creature {
     movementTimer = (axis, side, n = 0) => {
         if (n <= this.speed && this.checkFieldRange(axis, side)) {
             this.position[axis] += side * this.step;
+            this.setCenter(this.position);
             setTimeout(this.movementTimer, 0, axis, side, ++n);
         }
     };
@@ -78,9 +82,9 @@ export default class Creature {
     };
 
     showName = () => {
-        const nameLength = global.ctx.measureText(this.name.text).width;
+        const nameWidth = global.ctx.measureText(this.name.text).width;
 
-        this.name.position.x = this.center.x - nameLength / 2;
+        this.name.position.x = this.center.x - nameWidth / 2;
         this.name.position.y = this.center.y - this.name.offsetTop;
 
         global.ctx.font = this.name.font;
